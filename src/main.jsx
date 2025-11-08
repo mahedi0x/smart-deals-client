@@ -9,6 +9,11 @@ import { RouterProvider } from "react-router/dom";
 import RootLayout from './Layouts/RootLayout.jsx';
 import Home from './components/Home/Home.jsx';
 import AllProducts from './components/AllProducts/AllProducts.jsx';
+import AuthProvider from './contexts/AuthProvider.jsx';
+import Login from './components/Login/Login.jsx';
+import Register from './components/Register/Register.jsx';
+import MyProducts from './components/MyProducts/MyProducts.jsx';
+import MyBids from './components/MyBids/MyBids.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,15 +27,33 @@ const router = createBrowserRouter([
       {
         path: "/allProducts",
         Component: AllProducts
-      }
+      },
+      {
+        path: "/login",
+        Component: Login
+      },
+      {
+        path: "/register",
+        Component: Register
+      },
+      {
+        path: "/myProducts",
+        element: <MyProducts></MyProducts>
+      },
+      {
+        path: "/myBids",
+        element: <MyBids></MyBids>
+      },
 
     ]
   }
 ])
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}>
-    <App />
-    </RouterProvider>
+   
+   <AuthProvider>
+   <RouterProvider router={router}/>
+   </AuthProvider>
+   
   </StrictMode>,
 )

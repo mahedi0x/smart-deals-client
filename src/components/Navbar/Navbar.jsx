@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { use } from 'react';
 // import { FaAppStoreIos, FaGithub, FaHome } from 'react-icons/fa';
 // import { MdInstallDesktop } from 'react-icons/md';
 import { Link, NavLink } from 'react-router';
 import "./Navbar.css"
+import { AuthContext } from '../../contexts/AuthContext';
 
 const Navbar = () => {
+    const { user, signOutUser } = use(AuthContext);
+
+    const handleSignOut = () => {
+        signOutUser()
+            .then()
+            .catch()
+    }
+
 
     const links = <>
-           <li> <NavLink to='/' className="font-bold">Home</NavLink></li>
+           <li> <NavLink to='/' className="font-bold ">Home</NavLink></li>
            <li><NavLink to='/allProducts' className="font-bold">All Products</NavLink> </li>
+           {/* <li><NavLink to='/register' className="font-bold">Register</NavLink> </li> */}
+           {
+            user && <>
+            <li><NavLink to='/myProducts' className="font-bold">My Products</NavLink> </li>
+            <li><NavLink to='/myBids' className="font-bold">My Bids</NavLink> </li>
+            
+            </>
+           }
            </>
 
 
@@ -39,9 +56,13 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end">
-        <a href="https://github.com/mahedi0x" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-md bg-gradient-to-r from-[#632EE3] to-[#9F62F2] px-4 py-2 text-sm font-medium text-white">
-        {/* <FaGithub /> */}
-        <span>Contribute</span></a>
+        <div className="navbar-end">
+                {
+                    user ?
+                        <a onClick={handleSignOut} className="btn btn-primary">Sign Out</a> :
+                        <Link to="/login" className="btn w-1/2 text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700">Login</Link>
+                }
+            </div>
         </div>
       </div>
     )
